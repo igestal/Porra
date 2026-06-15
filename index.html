@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porra Mundial 2026 🏆</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --verde: #014B52;
+      --oro: #083A7A;
+      --rojo: #c0392b;
+      --fondo: #f0f4f3;
+      --superficie: #ffffff;
+      --superficie2: #e8f0ef;
+      --texto: #0d1f1e;
+      --texto-suave: #4a6e6a;
+      --borde: #c2d8d5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #013d44 0%, #014B52 50%, #013d44 100%);
+      border-bottom: 2px solid #014B52;
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 70%);
+    }
+    .header-badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #ffffff;
+      border: 1px solid #014B52;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+    }
+    header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      color: var(--texto);
+      position: relative;
+    }
+    header h1 span { color: #ffffff; }
+    .header-sub {
+      font-size: 0.85rem;
+      color: var(--texto-suave);
+      margin-top: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* BOTE HERO */
+    .bote-section {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.5rem 1.5rem 0;
+      flex-wrap: wrap;
+    }
+    .bote-card {
+      background: linear-gradient(135deg, #014B52, #013d44);
+      border: 1px solid #014B52;
+      border-radius: 12px;
+      padding: 1.25rem 2rem;
+      text-align: center;
+      min-width: 140px;
+    }
+    .bote-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 0.35rem;
+    }
+    .bote-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      line-height: 1;
+      color: var(--texto);
+    }
+    .bote-num.oro { color: #ffffff; }
+
+    /* NAV TABS */
+    .tabs {
+      display: flex;
+      gap: 0.25rem;
+      padding: 1.5rem 1.5rem 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex-shrink: 0;
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: 8px 8px 0 0;
+      padding: 0.6rem 1.25rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--texto-suave);
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: none;
+      letter-spacing: 0.03em;
+    }
+    .tab:hover { color: var(--texto); background: var(--superficie2); }
+    .tab.active {
+      background: var(--superficie2);
+      color: #ffffff;
+      border-color: var(--borde);
+      border-bottom: 2px solid #014B52;
+    }
+
+    /* CONTENIDO */
+    .contenido {
+      background: var(--superficie2);
+      border: 1px solid var(--borde);
+      border-radius: 0 12px 12px 12px;
+      margin: 0 1.5rem;
+      padding: 1.5rem;
+      min-height: 400px;
+    }
+
+    /* SECCIÓN */
+    .seccion { display: none; }
+    .seccion.activa { display: block; }
+
+    /* CLASIFICACIÓN */
+    .ranking-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+    .ranking-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .ranking-table th {
+      text-align: left;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--texto-suave);
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--borde);
+    }
+    .ranking-table td {
+      padding: 0.7rem 0.75rem;
+      border-bottom: 1px solid var(--borde);
+      vertical-align: middle;
+    }
+    .ranking-table tr:last-child td { border-bottom: none; }
+    .ranking-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .pos {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--texto-suave);
+      width: 30px;
+    }
+    .pos.top1 { color: #ffffff; }
+    .pos.top2 { color: #C0C0C0; }
+    .pos.top3 { color: #CD7F32; }
+    .nombre-participante { font-weight: 600; }
+    .puntos-badge {
+      display: inline-block;
+      background: #014B52;
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    /* GRUPOS */
+    .grupos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .grupo-card {
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .grupo-header {
+      background: var(--verde);
+      padding: 0.5rem 1rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .grupo-equipos { padding: 0.5rem 0; }
+    .equipo-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 1rem;
+      font-size: 0.83rem;
+      border-bottom: 1px solid var(--borde);
+      transition: background 0.15s;
+    }
+    .equipo-row:last-child { border-bottom: none; }
+    .equipo-row:hover { background: rgba(255,255,255,0.03); }
+    .bandera { font-size: 1.1rem; }
+    .equipo-nombre { flex: 1; font-weight: 500; }
+
+    /* PRONÓSTICOS */
+    .pronosticos-intro {
+      font-size: 0.85rem;
+      color: var(--texto-suave);
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+    }
+    .form-section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      margin: 1.25rem 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--borde);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--texto-suave);
+      margin-bottom: 0.35rem;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: 7px;
+      padding: 0.55rem 0.75rem;
+      color: var(--texto);
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: #ffffff;
+    }
+    .form-group select option { background: #111; }
+
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      letter-spacing: 0.03em;
+    }
+    .btn-oro {
+      background: #014B52;
+      color: #fff;
+    }
+    .btn-oro:hover { background: #016b76; transform: translateY(-1px); }
+    .btn-rojo {
+      background: var(--rojo);
+      color: white;
+    }
+    .btn-rojo:hover { background: #e01428; }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--borde);
+      color: var(--texto-suave);
+    }
+    .btn-outline:hover { border-color: var(--texto-suave); color: var(--texto); }
+
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    /* TABLA PARTICIPANTES */
+    .participantes-lista {
+      margin-top: 1.5rem;
+    }
+    .participante-item {
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .participante-nombre {
+      font-weight: 600;
+      flex: 1;
+      min-width: 100px;
+    }
+    .participante-pronosticos {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      flex: 3;
+    }
+    .pronostico-chip {
+      background: rgba(0,104,71,0.3);
+      border: 1px solid rgba(0,104,71,0.6);
+      border-radius: 5px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #7dcca0;
+    }
+    .pronostico-chip.campeón {
+      background: rgba(200,168,75,0.2);
+      border-color: rgba(200,168,75,0.5);
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .participante-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .btn-sm {
+      padding: 0.3rem 0.7rem;
+      font-size: 0.72rem;
+      border-radius: 5px;
+    }
+
+    /* PUNTUACIÓN INFO */
+    .puntuacion-info {
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .puntuacion-info h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+    .puntos-lista {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.5rem;
+    }
+    .punto-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid var(--borde);
+    }
+    .punto-item:last-child { border-bottom: none; }
+    .punto-valor {
+      font-weight: 700;
+      color: #ffffff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--verde);
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 999;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem 1.5rem;
+      color: var(--texto-suave);
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--superficie2);
+      border: 1px solid var(--borde);
+      border-radius: 14px;
+      padding: 1.75rem;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+      color: #ffffff;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--texto-suave);
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+    .empty-state p { font-size: 0.85rem; line-height: 1.6; }
+
+    /* RESULTADOS FASE ELIMINATORIA */
+    .elim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+    }
+    .elim-partido {
+      background: var(--superficie);
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+    }
+    .elim-fase {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--texto-suave);
+      margin-bottom: 0.5rem;
+    }
+    .elim-equipos {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .elim-vs {
+      color: var(--texto-suave);
+      font-size: 0.7rem;
+    }
+    .elim-resultado {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .elim-resultado input {
+      width: 55px;
+      background: var(--superficie2);
+      border: 1px solid var(--borde);
+      border-radius: 5px;
+      padding: 0.3rem 0.5rem;
+      color: var(--texto);
+      font-size: 0.82rem;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+    }
+    .elim-resultado input:focus { border-color: #ffffff; }
+
+    @media (max-width: 600px) {
+      .contenido { margin: 0 0.75rem; padding: 1rem; }
+      .tabs { padding: 1rem 0.75rem 0; }
+      .bote-section { padding: 1rem 0.75rem 0; }
+      header { padding: 1.5rem 1rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-badge">⚽ Detegasa · Edición 2026</div>
+  <h1>PORRA <span>MUNDIAL</span></h1>
+  <p class="header-sub">USA · México · Canadá &nbsp;·&nbsp; 11 junio – 19 julio 2026</p>
+</header>
+
+<!-- BIZUM BANNER -->
+<div style="display:flex;justify-content:center;padding:1rem 1.5rem 0;">
+  <a href="https://bizum.es/send/?amount=2&phone=675154905&concept=Porra+Mundial+2026" target="_blank"
+     style="display:flex;align-items:center;gap:0.75rem;background:linear-gradient(135deg,#014B52,#013d44);border:1.5px solid #012e33;border-radius:12px;padding:0.85rem 1.5rem;text-decoration:none;transition:all 0.2s;max-width:420px;width:100%;"
+     onmouseover="this.style.borderColor='#7ecfc8';this.style.transform='translateY(-1px)'"
+     onmouseout="this.style.borderColor='#012e33';this.style.transform='translateY(0)'">
+    <div style="font-size:1.8rem;">💙</div>
+    <div>
+      <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#7ecfc8;margin-bottom:0.2rem;">Pagar inscripción · 2 €</div>
+      <div style="font-size:0.92rem;font-weight:700;color:#fff;">Bizum a Inés Gestal</div>
+      <div style="font-size:0.78rem;color:rgba(255,255,255,0.6);margin-top:0.1rem;">675 154 905 · Concepto: Porra Mundial 2026</div>
+    </div>
+    <div style="margin-left:auto;font-size:0.75rem;font-weight:700;color:#7ecfc8;">Pagar →</div>
+  </a>
+</div>
+
+<!-- BOTE -->
+<div class="bote-section" id="statsBar">
+  <div class="bote-card">
+    <div class="bote-label">Participantes</div>
+    <div class="bote-num" id="numParticipantes">0</div>
+  </div>
+  <div class="bote-card">
+    <div class="bote-label">Bote total</div>
+    <div class="bote-num oro" id="boteTotal">0 €</div>
+  </div>
+  <div class="bote-card">
+    <div class="bote-label">Precio</div>
+    <div class="bote-num">2 €</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="mostrarSeccion('clasificacion', this)">🏆 Clasificación</div>
+  <div class="tab" onclick="mostrarSeccion('participantes', this)">👥 Participantes</div>
+  <div class="tab" onclick="mostrarSeccion('grupos', this)">🌍 Grupos</div>
+  <div class="tab" onclick="mostrarSeccion('eliminatoria', this)">⚡ Eliminatoria</div>
+  <div class="tab" onclick="mostrarSeccion('puntuacion', this)">📋 Puntuación</div>
+</div>
+
+<!-- CONTENIDO -->
+<div class="contenido">
+
+  <!-- CLASIFICACIÓN -->
+  <div class="seccion activa" id="sec-clasificacion">
+    <p class="ranking-title">Clasificación general</p>
+    <div id="rankingContainer">
+      <div class="empty-state">
+        <div class="empty-icon">🏅</div>
+        <p>Aún no hay participantes.<br>Añade participantes y sus pronósticos para ver la clasificación.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTICIPANTES -->
+  <div class="seccion" id="sec-participantes">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
+      <p class="ranking-title" style="margin:0;">Gestión de participantes</p>
+      <button class="btn btn-oro" onclick="abrirModalParticipante()">+ Añadir participante</button>
+    </div>
+    <div id="participantesLista">
+      <div class="empty-state">
+        <div class="empty-icon">👤</div>
+        <p>Ningún participante aún.<br>Pulsa "Añadir participante" para empezar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRUPOS -->
+  <div class="seccion" id="sec-grupos">
+    <p class="ranking-title">Los 12 Grupos del Mundial 2026</p>
+    <div class="grupos-grid" id="gruposGrid"></div>
+  </div>
+
+  <!-- ELIMINATORIA -->
+  <div class="seccion" id="sec-eliminatoria">
+    <p class="ranking-title">Fase Eliminatoria</p>
+    <p style="font-size:0.82rem;color:var(--texto-suave);margin-bottom:1.25rem;">Introduce los resultados de la fase eliminatoria para actualizar puntos automáticamente.</p>
+    <div class="form-section-title">Dieciseisavos de Final</div>
+    <div class="elim-grid" id="elim-16"></div>
+    <div class="form-section-title" style="margin-top:1.5rem;">Octavos de Final</div>
+    <div class="elim-grid" id="elim-8"></div>
+    <div class="form-section-title" style="margin-top:1.5rem;">Cuartos de Final</div>
+    <div class="elim-grid" id="elim-4"></div>
+    <div class="form-section-title" style="margin-top:1.5rem;">Semifinales</div>
+    <div class="elim-grid" id="elim-semi"></div>
+    <div class="form-section-title" style="margin-top:1.5rem;">Final</div>
+    <div class="elim-grid" id="elim-final"></div>
+    <div class="btn-row">
+      <button class="btn btn-oro" onclick="guardarEliminatoria()">Guardar resultados</button>
+    </div>
+  </div>
+
+  <!-- PUNTUACIÓN -->
+  <div class="seccion" id="sec-puntuacion">
+    <p class="ranking-title">Sistema de Puntuación</p>
+    <div class="puntuacion-info">
+      <h3>⚽ Fase de Grupos</h3>
+      <div class="puntos-lista">
+        <div class="punto-item"><span>Ganador del grupo</span><span class="punto-valor">5 pts</span></div>
+        <div class="punto-item"><span>2º clasificado grupo</span><span class="punto-valor">3 pts</span></div>
+      </div>
+    </div>
+    <div class="puntuacion-info">
+      <h3>⚡ Fase Eliminatoria</h3>
+      <div class="puntos-lista">
+        <div class="punto-item"><span>Clasificado a 1/8 final</span><span class="punto-valor">2 pts</span></div>
+        <div class="punto-item"><span>Clasificado a cuartos</span><span class="punto-valor">3 pts</span></div>
+        <div class="punto-item"><span>Clasificado a semis</span><span class="punto-valor">5 pts</span></div>
+        <div class="punto-item"><span>Finalista (perdedor)</span><span class="punto-valor">7 pts</span></div>
+        <div class="punto-item"><span>🏆 Campeón del Mundial</span><span class="punto-valor">15 pts</span></div>
+      </div>
+    </div>
+    <div class="puntuacion-info">
+      <h3>🎁 Reparto del bote</h3>
+      <div class="puntos-lista">
+        <div class="punto-item"><span>🥇 1er clasificado</span><span class="punto-valor">60%</span></div>
+        <div class="punto-item"><span>🥈 2º clasificado</span><span class="punto-valor">30%</span></div>
+        <div class="punto-item"><span>🥉 3er clasificado</span><span class="punto-valor">10%</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- fin contenido -->
+
+<!-- MODAL AÑADIR PARTICIPANTE -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
+  <div class="modal">
+    <h2 id="modalTitulo">Añadir Participante</h2>
+
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label>Nombre</label>
+      <input type="text" id="inputNombre" placeholder="Ej: María García" />
+    </div>
+
+    <div class="form-section-title">Pronóstico: Ganadores de grupo</div>
+    <p style="font-size:0.75rem;color:var(--texto-suave);margin-bottom:0.75rem;">¿Qué selección queda 1ª y 2ª en cada grupo?</p>
+    <div class="form-grid" id="pronosticosGrupos"></div>
+
+    <div class="form-section-title">Pronóstico: Campeón del Mundial</div>
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label>🏆 Campeón</label>
+      <select id="selectCampeon">
+        <option value="">— Selecciona —</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label>Finalista (subcampeón)</label>
+      <select id="selectSubcampeon">
+        <option value="">— Selecciona —</option>
+      </select>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-oro" onclick="guardarParticipante()">Guardar</button>
+      <button class="btn btn-outline" onclick="document.getElementById('modalOverlay').classList.remove('open')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<footer>
+  Porra Mundial 2026 · Detegasa &nbsp;⚽&nbsp; Hecho con 💚
+</footer>
+
+<script>
+// ───────────────────────────────────────────────
+// DATOS: GRUPOS MUNDIALES 2026
+// ───────────────────────────────────────────────
+const GRUPOS = [
+  { nombre: 'A', equipos: ['México 🇲🇽', 'Sudáfrica 🇿🇦', 'Corea del Sur 🇰🇷', 'Chequia 🇨🇿'] },
+  { nombre: 'B', equipos: ['Canadá 🇨🇦', 'Bosnia y Herzegovina 🇧🇦', 'Catar 🇶🇦', 'Suiza 🇨🇭'] },
+  { nombre: 'C', equipos: ['Brasil 🇧🇷', 'Marruecos 🇲🇦', 'Haití 🇭🇹', 'Escocia 🏴󠁧󠁢󠁳󠁣󠁴󠁿'] },
+  { nombre: 'D', equipos: ['USA 🇺🇸', 'Paraguay 🇵🇾', 'Australia 🇦🇺', 'Turquía 🇹🇷'] },
+  { nombre: 'E', equipos: ['Alemania 🇩🇪', 'Curazao 🏝️', 'Costa de Marfil 🇨🇮', 'Ecuador 🇪🇨'] },
+  { nombre: 'F', equipos: ['Países Bajos 🇳🇱', 'Japón 🇯🇵', 'Suecia 🇸🇪', 'Túnez 🇹🇳'] },
+  { nombre: 'G', equipos: ['Bélgica 🇧🇪', 'Egipto 🇪🇬', 'Irán 🇮🇷', 'Nueva Zelanda 🇳🇿'] },
+  { nombre: 'H', equipos: ['España 🇪🇸', 'Cabo Verde 🇨🇻', 'Arabia Saudí 🇸🇦', 'Uruguay 🇺🇾'] },
+  { nombre: 'I', equipos: ['Francia 🇫🇷', 'Senegal 🇸🇳', 'Irak 🇮🇶', 'Noruega 🇳🇴'] },
+  { nombre: 'J', equipos: ['Argentina 🇦🇷', 'Argelia 🇩🇿', 'Austria 🇦🇹', 'Jordania 🇯🇴'] },
+  { nombre: 'K', equipos: ['Portugal 🇵🇹', 'R.D. Congo 🇨🇩', 'Uzbekistán 🇺🇿', 'Colombia 🇨🇴'] },
+  { nombre: 'L', equipos: ['Inglaterra 🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Croacia 🇭🇷', 'Ghana 🇬🇭', 'Panamá 🇵🇦'] },
+];
+
+const TODOS_EQUIPOS = GRUPOS.flatMap(g => g.equipos).sort((a,b) => a.localeCompare(b));
+
+// ───────────────────────────────────────────────
+// ESTADO LOCAL
+// ───────────────────────────────────────────────
+let participantes = JSON.parse(localStorage.getItem('porra_participantes') || '[]');
+let resultadosGrupos = JSON.parse(localStorage.getItem('porra_resultados_grupos') || '{}');
+let resultadosElim = JSON.parse(localStorage.getItem('porra_eliminatoria') || '{}');
+let editandoIdx = null;
+
+// ───────────────────────────────────────────────
+// TABS
+// ───────────────────────────────────────────────
+function mostrarSeccion(id, tab) {
+  document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('activa');
+  tab.classList.add('active');
+}
+
+// ───────────────────────────────────────────────
+// RENDER GRUPOS
+// ───────────────────────────────────────────────
+function renderGrupos() {
+  const grid = document.getElementById('gruposGrid');
+  grid.innerHTML = GRUPOS.map(g => `
+    <div class="grupo-card">
+      <div class="grupo-header">
+        <span>Grupo ${g.nombre}</span>
+      </div>
+      <div class="grupo-equipos">
+        ${g.equipos.map(e => `
+          <div class="equipo-row">
+            <span class="equipo-nombre">${e}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ───────────────────────────────────────────────
+// MODAL PARTICIPANTE
+// ───────────────────────────────────────────────
+function abrirModalParticipante(idx = null) {
+  editandoIdx = idx;
+  document.getElementById('modalTitulo').textContent = idx !== null ? 'Editar Participante' : 'Añadir Participante';
+
+  const p = idx !== null ? participantes[idx] : null;
+  document.getElementById('inputNombre').value = p ? p.nombre : '';
+
+  // Selects campeón/subcampeón
+  const opts = TODOS_EQUIPOS.map(e => `<option value="${e}">${e}</option>`).join('');
+  document.getElementById('selectCampeon').innerHTML = '<option value="">— Selecciona —</option>' + opts;
+  document.getElementById('selectSubcampeon').innerHTML = '<option value="">— Selecciona —</option>' + opts;
+  if (p) {
+    document.getElementById('selectCampeon').value = p.campeon || '';
+    document.getElementById('selectSubcampeon').value = p.subcampeon || '';
+  }
+
+  // Pronósticos de grupos
+  const cont = document.getElementById('pronosticosGrupos');
+  cont.innerHTML = GRUPOS.map(g => {
+    const op1 = p && p.grupos ? (p.grupos[g.nombre]?.primero || '') : '';
+    const op2 = p && p.grupos ? (p.grupos[g.nombre]?.segundo || '') : '';
+    const opts = g.equipos.map(e => `<option value="${e}">${e}</option>`).join('');
+    return `
+      <div class="form-group">
+        <label>Grupo ${g.nombre} — 1º</label>
+        <select id="grupo_${g.nombre}_1">
+          <option value="">— —</option>${opts}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Grupo ${g.nombre} — 2º</label>
+        <select id="grupo_${g.nombre}_2">
+          <option value="">— —</option>${opts}
+        </select>
+      </div>
+    `;
+  }).join('');
+
+  if (p && p.grupos) {
+    GRUPOS.forEach(g => {
+      const s1 = document.getElementById(`grupo_${g.nombre}_1`);
+      const s2 = document.getElementById(`grupo_${g.nombre}_2`);
+      if (s1 && p.grupos[g.nombre]?.primero) s1.value = p.grupos[g.nombre].primero;
+      if (s2 && p.grupos[g.nombre]?.segundo) s2.value = p.grupos[g.nombre].segundo;
+    });
+  }
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function cerrarModal(e) {
+  if (e.target === document.getElementById('modalOverlay'))
+    document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function guardarParticipante() {
+  const nombre = document.getElementById('inputNombre').value.trim();
+  if (!nombre) { mostrarToast('❌ Escribe un nombre'); return; }
+
+  const grupos = {};
+  GRUPOS.forEach(g => {
+    const primero = document.getElementById(`grupo_${g.nombre}_1`)?.value || '';
+    const segundo = document.getElementById(`grupo_${g.nombre}_2`)?.value || '';
+    grupos[g.nombre] = { primero, segundo };
+  });
+
+  const campeon = document.getElementById('selectCampeon').value;
+  const subcampeon = document.getElementById('selectSubcampeon').value;
+
+  const obj = { nombre, grupos, campeon, subcampeon };
+
+  if (editandoIdx !== null) {
+    participantes[editandoIdx] = obj;
+  } else {
+    participantes.push(obj);
+  }
+
+  guardarDatos();
+  document.getElementById('modalOverlay').classList.remove('open');
+  mostrarToast(`✅ ${nombre} guardado`);
+  renderParticipantes();
+  renderClasificacion();
+  actualizarStats();
+}
+
+function eliminarParticipante(idx) {
+  if (!confirm(`¿Eliminar a ${participantes[idx].nombre}?`)) return;
+  participantes.splice(idx, 1);
+  guardarDatos();
+  renderParticipantes();
+  renderClasificacion();
+  actualizarStats();
+  mostrarToast('🗑️ Participante eliminado');
+}
+
+// ───────────────────────────────────────────────
+// RENDER PARTICIPANTES
+// ───────────────────────────────────────────────
+function renderParticipantes() {
+  const cont = document.getElementById('participantesLista');
+  if (participantes.length === 0) {
+    cont.innerHTML = `<div class="empty-state"><div class="empty-icon">👤</div><p>Ningún participante aún.<br>Pulsa "Añadir participante" para empezar.</p></div>`;
+    return;
+  }
+  cont.innerHTML = participantes.map((p, i) => {
+    const chips = Object.entries(p.grupos || {}).map(([g, v]) => {
+      const txt = [];
+      if (v.primero) txt.push(`${g}1º: ${v.primero.split(' ')[0]}`);
+      if (v.segundo) txt.push(`${g}2º: ${v.segundo.split(' ')[0]}`);
+      return txt.map(t => `<span class="pronostico-chip">${t}</span>`).join('');
+    }).join('');
+    const campChip = p.campeon ? `<span class="pronostico-chip campeón">🏆 ${p.campeon.split(' ')[0]}</span>` : '';
+    const pts = calcularPuntos(p);
+    return `
+      <div class="participante-item">
+        <div class="participante-nombre">${p.nombre}</div>
+        <div class="participante-pronosticos">${campChip}${chips}</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:#014B52;min-width:40px;text-align:right;">${pts}pts</div>
+        <div class="participante-actions">
+          <button class="btn btn-outline btn-sm" onclick="abrirModalParticipante(${i})">✏️</button>
+          <button class="btn btn-rojo btn-sm" onclick="eliminarParticipante(${i})">🗑️</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ───────────────────────────────────────────────
+// PUNTUACIÓN
+// ───────────────────────────────────────────────
+function calcularPuntos(p) {
+  let pts = 0;
+
+  // Grupos: 5 pts por acertar 1º, 3 pts por acertar 2º
+  GRUPOS.forEach(g => {
+    const real = resultadosGrupos[g.nombre] || {};
+    const pred = p.grupos?.[g.nombre] || {};
+    if (pred.primero && real.primero && pred.primero === real.primero) pts += 5;
+    if (pred.segundo && real.segundo && pred.segundo === real.segundo) pts += 3;
+  });
+
+  // Eliminatoria
+  const re = resultadosElim;
+
+  // 1/8 final: 2 pts por clasificado correcto
+  (re['16'] || []).forEach(r => {
+    if (r.ganador && p.campeon === r.ganador) pts += 2;
+    if (r.ganador && p.subcampeon === r.ganador) pts += 2;
+  });
+
+  // Cuartos: 3 pts
+  (re['8'] || []).forEach(r => {
+    if (r.ganador && (p.campeon === r.ganador || p.subcampeon === r.ganador)) pts += 3;
+  });
+
+  // Semis: 5 pts
+  (re['4'] || []).forEach(r => {
+    if (r.ganador && (p.campeon === r.ganador || p.subcampeon === r.ganador)) pts += 5;
+  });
+
+  // Final
+  const final = re['final'];
+  if (final) {
+    if (final.ganador && p.campeon === final.ganador) pts += 15;
+    if (final.perdedor && p.subcampeon === final.perdedor) pts += 7;
+    if (final.ganador && p.subcampeon === final.ganador) pts += 7; // subcampeón que ganó no contaría pero por si acaso
+  }
+
+  return pts;
+}
+
+// ───────────────────────────────────────────────
+// CLASIFICACIÓN
+// ───────────────────────────────────────────────
+function renderClasificacion() {
+  const cont = document.getElementById('rankingContainer');
+  if (participantes.length === 0) {
+    cont.innerHTML = `<div class="empty-state"><div class="empty-icon">🏅</div><p>Aún no hay participantes.<br>Añade participantes y sus pronósticos para ver la clasificación.</p></div>`;
+    return;
+  }
+
+  const ranking = participantes
+    .map((p, i) => ({ ...p, pts: calcularPuntos(p), idx: i }))
+    .sort((a, b) => b.pts - a.pts);
+
+  const bote = participantes.length * 2;
+
+  cont.innerHTML = `
+    <table class="ranking-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Participante</th>
+          <th>Campeón</th>
+          <th>Puntos</th>
+          <th>Premio est.</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${ranking.map((p, i) => {
+          const premio = i === 0 ? (bote * 0.6).toFixed(2) : i === 1 ? (bote * 0.3).toFixed(2) : i === 2 ? (bote * 0.1).toFixed(2) : '—';
+          const posClass = i === 0 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : '';
+          return `
+            <tr>
+              <td class="pos ${posClass}">${i + 1}</td>
+              <td class="nombre-participante">${p.nombre}</td>
+              <td style="font-size:0.8rem">${p.campeon || '—'}</td>
+              <td><span class="puntos-badge">${p.pts}</span></td>
+              <td style="font-size:0.8rem;color:#014B52;">${premio !== '—' ? premio + ' €' : '—'}</td>
+            </tr>
+          `;
+        }).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+// ───────────────────────────────────────────────
+// ELIMINATORIA (entrada de resultados para admin)
+// ───────────────────────────────────────────────
+function renderEliminatoria() {
+  const fases = [
+    { id: 'elim-16', key: '16', label: 'Dieciseisavos', count: 16 },
+    { id: 'elim-8',  key: '8',  label: 'Octavos',       count: 8  },
+    { id: 'elim-4',  key: '4',  label: 'Cuartos',        count: 4  },
+    { id: 'elim-semi', key: 'semi', label: 'Semifinales', count: 2 },
+  ];
+
+  fases.forEach(f => {
+    const cont = document.getElementById(f.id);
+    const guardados = resultadosElim[f.key] || [];
+    cont.innerHTML = Array.from({length: f.count}, (_, i) => {
+      const g = guardados[i] || {};
+      return `
+        <div class="elim-partido">
+          <div class="elim-fase">${f.label} · Partido ${i+1}</div>
+          <div class="elim-resultado">
+            <select style="flex:1;background:var(--superficie2);border:1px solid var(--borde);border-radius:5px;padding:0.3rem 0.5rem;color:var(--texto);font-size:0.78rem;font-family:Inter,sans-serif;outline:none;" id="${f.key}_g_${i}">
+              <option value="">Ganador…</option>
+              ${TODOS_EQUIPOS.map(e => `<option value="${e}" ${g.ganador===e?'selected':''}>${e}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+      `;
+    }).join('');
+  });
+
+  // Final
+  const finalCont = document.getElementById('elim-final');
+  const gf = resultadosElim['final'] || {};
+  finalCont.innerHTML = `
+    <div class="elim-partido" style="border-color:#014B52;">
+      <div class="elim-fase" style="color:#014B52;">⭐ Gran Final</div>
+      <div class="elim-resultado">
+        <select style="flex:1;background:var(--superficie2);border:1px solid var(--borde);border-radius:5px;padding:0.3rem 0.5rem;color:var(--texto);font-size:0.78rem;font-family:Inter,sans-serif;outline:none;" id="final_campeon">
+          <option value="">Campeón…</option>
+          ${TODOS_EQUIPOS.map(e => `<option value="${e}" ${gf.ganador===e?'selected':''}>${e}</option>`).join('')}
+        </select>
+        <select style="flex:1;background:var(--superficie2);border:1px solid var(--borde);border-radius:5px;padding:0.3rem 0.5rem;color:var(--texto);font-size:0.78rem;font-family:Inter,sans-serif;outline:none;" id="final_subcampeon">
+          <option value="">Subcampeón…</option>
+          ${TODOS_EQUIPOS.map(e => `<option value="${e}" ${gf.perdedor===e?'selected':''}>${e}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+  `;
+}
+
+function guardarEliminatoria() {
+  const fases = [
+    { id: 'elim-16', key: '16', count: 16 },
+    { id: 'elim-8',  key: '8',  count: 8  },
+    { id: 'elim-4',  key: '4',  count: 4  },
+    { id: 'elim-semi', key: 'semi', count: 2 },
+  ];
+  fases.forEach(f => {
+    resultadosElim[f.key] = Array.from({length: f.count}, (_, i) => ({
+      ganador: document.getElementById(`${f.key}_g_${i}`)?.value || ''
+    }));
+  });
+  resultadosElim['final'] = {
+    ganador: document.getElementById('final_campeon')?.value || '',
+    perdedor: document.getElementById('final_subcampeon')?.value || ''
+  };
+  localStorage.setItem('porra_eliminatoria', JSON.stringify(resultadosElim));
+  renderClasificacion();
+  renderParticipantes();
+  mostrarToast('✅ Resultados guardados y puntos actualizados');
+}
+
+// ───────────────────────────────────────────────
+// STATS BAR
+// ───────────────────────────────────────────────
+function actualizarStats() {
+  document.getElementById('numParticipantes').textContent = participantes.length;
+  document.getElementById('boteTotal').textContent = (participantes.length * 2) + ' €';
+}
+
+// ───────────────────────────────────────────────
+// PERSISTENCIA
+// ───────────────────────────────────────────────
+function guardarDatos() {
+  localStorage.setItem('porra_participantes', JSON.stringify(participantes));
+}
+
+// ───────────────────────────────────────────────
+// TOAST
+// ───────────────────────────────────────────────
+function mostrarToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ───────────────────────────────────────────────
+// INIT
+// ───────────────────────────────────────────────
+renderGrupos();
+renderEliminatoria();
+renderParticipantes();
+renderClasificacion();
+actualizarStats();
+</script>
+</body>
+</html>
