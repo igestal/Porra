@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///C:/Users/igestal/Downloads/index_5.html -->
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Porra Mundial 2026 🏆</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
@@ -221,6 +221,55 @@
 
     footer { text-align: center; padding: 2rem 1.5rem 1.5rem; color: var(--texto-suave); font-size: 0.75rem; }
 
+    /* COUNTDOWN */
+    .countdown-bar {
+      display: flex; justify-content: center; padding: 0.75rem 1.5rem 0;
+    }
+    .countdown-box {
+      background: linear-replace(135deg, #014B52, #013d44);
+      background: #014B52;
+      border-radius: 10px; padding: 0.75rem 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+      max-width: 480px; width: 100%;
+    }
+    .countdown-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7ecfc8; white-space: nowrap; }
+    .countdown-timer { display: flex; gap: 0.5rem; align-items: center; flex: 1; justify-content: flex-end; }
+    .countdown-unit { text-align: center; }
+    .countdown-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; line-height: 1; color: white; display: block; }
+    .countdown-sub { font-size: 0.6rem; color: #7ecfc8; text-transform: uppercase; letter-spacing: 0.08em; }
+    .countdown-sep { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: #7ecfc8; margin-bottom: 6px; }
+    .countdown-expirado { font-size: 0.85rem; font-weight: 700; color: #ff6b6b; }
+
+    /* CUSTOM SELECT CON BANDERAS */
+    .flag-select { position: relative; width: 100%; }
+    .flag-select-btn {
+      width: 100%; background: var(--fondo); border: 1px solid var(--borde);
+      border-radius: 7px; padding: 0.55rem 0.75rem; color: var(--texto);
+      font-size: 0.85rem; font-family: 'Inter', sans-serif;
+      cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+      transition: border-color 0.2s; text-align: left;
+      justify-content: space-between;
+    }
+    .flag-select-btn:focus, .flag-select-btn.open { border-color: var(--verde); outline: none; }
+    .flag-select-btn .flag-select-label { display: flex; align-items: center; gap: 0.5rem; flex:1; }
+    .flag-select-btn .arrow { color: var(--texto-suave); font-size: 0.7rem; flex-shrink:0; }
+    .flag-select-dropdown {
+      position: absolute; top: 100%; left: 0; right: 0; z-index: 999;
+      background: white; border: 1px solid var(--borde); border-radius: 7px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12); max-height: 220px;
+      overflow-y: auto; display: none; margin-top: 2px;
+    }
+    .flag-select-dropdown.open { display: block; }
+    .flag-select-option {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 0.75rem; cursor: pointer; font-size: 0.83rem;
+      transition: background 0.15s;
+    }
+    .flag-select-option:hover { background: var(--fondo); }
+    .flag-select-option.selected { background: rgba(1,75,82,0.08); font-weight: 600; color: var(--verde); }
+    .flag-select-option img, .flag-select-btn img { border-radius: 2px; flex-shrink:0; }
+    .flag-placeholder { color: var(--texto-suave); }
+
     @media (max-width: 600px) {
       .contenido { margin: 0 0.75rem; padding: 1rem; }
       .tabs { padding: 1rem 0.75rem 0; }
@@ -238,10 +287,10 @@
 
 <!-- BIZUM -->
 <div class="bizum-wrap">
-  <a href="https://bizum.es/send/?amount=2&amp;phone=675154905&amp;concept=Porra+Mundial+2026" target="_blank" class="bizum-btn">
-    <div style="font-size:1.4rem; font-weight:900; color:#7ecfc8; font-family:&#39;Bebas Neue&#39;,sans-serif; letter-spacing:0.05em;">BIZUM</div>
+  <a href="https://bizum.es/send/?amount=3&phone=675154905&concept=Porra+Mundial+2026" target="_blank" class="bizum-btn">
+    <div style="font-size:1.4rem; font-weight:900; color:#7ecfc8; font-family:'Bebas Neue',sans-serif; letter-spacing:0.05em;">BIZUM</div>
     <div>
-      <div class="bizum-label">Pagar inscripción · 2 €</div>
+      <div class="bizum-label">Pagar inscripción · 3 €</div>
       <div class="bizum-nombre">Bizum a Inés Gestal</div>
       <div class="bizum-tel">675 154 905 · Concepto: Porra Mundial 2026</div>
     </div>
@@ -249,41 +298,55 @@
   </a>
 </div>
 
+<!-- COUNTDOWN -->
+<div class="countdown-bar">
+  <div class="countdown-box">
+    <div class="countdown-label">⏰ Plazo inscripción</div>
+    <div class="countdown-timer" id="countdownTimer">
+      <div class="countdown-unit"><span class="countdown-num" id="cd-dias">--</span><span class="countdown-sub">días</span></div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-horas">--</span><span class="countdown-sub">horas</span></div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-sub">min</span></div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-unit"><span class="countdown-num" id="cd-segs">--</span><span class="countdown-sub">seg</span></div>
+    </div>
+  </div>
+</div>
+
 <!-- STATS -->
 <div class="bote-section">
   <div class="bote-card">
     <div class="bote-label">Participantes</div>
-    <div class="bote-num" id="numParticipantes">0</div>
+    <div class="bote-num" id="numParticipantes">—</div>
   </div>
   <div class="bote-card">
     <div class="bote-label">Bote total</div>
-    <div class="bote-num" id="boteTotal">0 €</div>
+    <div class="bote-num" id="boteTotal">— €</div>
   </div>
   <div class="bote-card">
     <div class="bote-label">Precio</div>
-    <div class="bote-num">2 €</div>
+    <div class="bote-num">3 €</div>
   </div>
 </div>
 
 <!-- TABS -->
 <div class="tabs">
-  <div class="tab" onclick="mostrarSeccion(&#39;clasificacion&#39;, this)">🏆 Clasificación</div>
-  <div class="tab" onclick="mostrarSeccion(&#39;inscripcion&#39;, this)">✍️ Apuntarse</div>
-  <div class="tab active" onclick="mostrarSeccion(&#39;grupos&#39;, this)">🌍 Grupos</div>
-  <div class="tab" onclick="mostrarSeccion(&#39;puntuacion&#39;, this)">📋 Puntuación</div>
-  <div class="tab" onclick="mostrarSeccion(&#39;admin&#39;, this)">🔐 Admin</div>
+  <div class="tab active" onclick="mostrarSeccion('clasificacion', this)">🏆 Clasificación</div>
+  <div class="tab" onclick="mostrarSeccion('inscripcion', this)">✍️ Apuntarse</div>
+  <div class="tab" onclick="mostrarSeccion('grupos', this)">🌍 Grupos</div>
+  <div class="tab" onclick="mostrarSeccion('puntuacion', this)">📋 Puntuación</div>
+  <div class="tab" onclick="mostrarSeccion('admin', this)">🔐 Admin</div>
 </div>
 
 <div class="contenido">
 
   <!-- CLASIFICACIÓN -->
-  <div class="seccion" id="sec-clasificacion">
+  <div class="seccion activa" id="sec-clasificacion">
     <p class="sec-title">Clasificación general</p>
     <div id="rankingContainer">
-      <div class="empty-state">
-        <div class="empty-icon">📋</div>
-        <p>Aún no hay participantes apuntados.<br>¡Sé el primero en la pestaña "Apuntarse"!</p>
-      </div></div>
+      <div class="loading"><div class="spinner"></div>Cargando datos…</div>
+    </div>
   </div>
 
   <!-- INSCRIPCIÓN -->
@@ -291,88 +354,40 @@
     <p class="sec-title">Apúntate a la porra</p>
     <div class="inscripcion-intro">
       Rellena el formulario con tus pronósticos y pulsa <strong>Enviar</strong>. 
-      Recuerda hacer el Bizum de <strong>2 €</strong> a Inés antes de apuntarte. 
+      Recuerda hacer el Bizum de <strong>3 €</strong> a Inés antes de apuntarte. 
       Solo se puede enviar una vez por nombre.
     </div>
 
     <div class="form-group" style="margin-bottom:1rem; max-width:340px;">
       <label>Tu nombre y apellido</label>
-      <input type="text" id="inputNombre" placeholder="Ej: María García">
+      <input type="text" id="inputNombre" placeholder="Ej: María García" />
     </div>
 
     <div class="form-section-title">¿Quién queda 1º en cada grupo?</div>
-    <div class="form-grid" id="gruposForm">
-      <div class="form-group">
-        <label>Grupo A — 1º</label>
-        <select id="f_A_1"><option value="">— —</option><option value="México">México</option><option value="Sudáfrica">Sudáfrica</option><option value="Corea del Sur">Corea del Sur</option><option value="Chequia">Chequia</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo B — 1º</label>
-        <select id="f_B_1"><option value="">— —</option><option value="Canadá">Canadá</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Catar">Catar</option><option value="Suiza">Suiza</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo C — 1º</label>
-        <select id="f_C_1"><option value="">— —</option><option value="Brasil">Brasil</option><option value="Marruecos">Marruecos</option><option value="Haití">Haití</option><option value="Escocia">Escocia</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo D — 1º</label>
-        <select id="f_D_1"><option value="">— —</option><option value="USA">USA</option><option value="Paraguay">Paraguay</option><option value="Australia">Australia</option><option value="Turquía">Turquía</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo E — 1º</label>
-        <select id="f_E_1"><option value="">— —</option><option value="Alemania">Alemania</option><option value="Curazao">Curazao</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Ecuador">Ecuador</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo F — 1º</label>
-        <select id="f_F_1"><option value="">— —</option><option value="Países Bajos">Países Bajos</option><option value="Japón">Japón</option><option value="Suecia">Suecia</option><option value="Túnez">Túnez</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo G — 1º</label>
-        <select id="f_G_1"><option value="">— —</option><option value="Bélgica">Bélgica</option><option value="Egipto">Egipto</option><option value="Irán">Irán</option><option value="Nueva Zelanda">Nueva Zelanda</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo H — 1º</label>
-        <select id="f_H_1"><option value="">— —</option><option value="España">España</option><option value="Cabo Verde">Cabo Verde</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Uruguay">Uruguay</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo I — 1º</label>
-        <select id="f_I_1"><option value="">— —</option><option value="Francia">Francia</option><option value="Senegal">Senegal</option><option value="Irak">Irak</option><option value="Noruega">Noruega</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo J — 1º</label>
-        <select id="f_J_1"><option value="">— —</option><option value="Argentina">Argentina</option><option value="Argelia">Argelia</option><option value="Austria">Austria</option><option value="Jordania">Jordania</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo K — 1º</label>
-        <select id="f_K_1"><option value="">— —</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Uzbekistán">Uzbekistán</option><option value="Colombia">Colombia</option></select>
-      </div>
-      <div class="form-group">
-        <label>Grupo L — 1º</label>
-        <select id="f_L_1"><option value="">— —</option><option value="Inglaterra">Inglaterra</option><option value="Croacia">Croacia</option><option value="Ghana">Ghana</option><option value="Panamá">Panamá</option></select>
-      </div></div>
+    <div class="form-grid" id="gruposForm"></div>
 
     <div class="form-section-title">⚡ Fase Eliminatoria — ¿Qué equipo llega a cada fase?</div>
     <p style="font-size:0.78rem;color:var(--texto-suave);margin-bottom:0.75rem;">Elige un equipo diferente para cada fase. Puedes repetir si crees que el mismo equipo llega más lejos.</p>
     <div class="form-grid">
       <div class="form-group">
         <label>⚡ Campeón de 1/8 final (5 pts)</label>
-        <select id="selectOctavos"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+        <select id="selectOctavos"><option value="">— Selecciona —</option></select>
       </div>
       <div class="form-group">
         <label>⚡ Campeón de Cuartos (8 pts)</label>
-        <select id="selectCuartos"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+        <select id="selectCuartos"><option value="">— Selecciona —</option></select>
       </div>
       <div class="form-group">
         <label>⚡ Campeón de Semis (10 pts)</label>
-        <select id="selectSemis"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+        <select id="selectSemis"><option value="">— Selecciona —</option></select>
       </div>
       <div class="form-group">
         <label>🥈 Subcampeón (10 pts)</label>
-        <select id="selectSubcampeon"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+        <select id="selectSubcampeon"><option value="">— Selecciona —</option></select>
       </div>
       <div class="form-group">
         <label>🏆 Campeón del Mundial (20 pts)</label>
-        <select id="selectCampeon"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+        <select id="selectCampeon"><option value="">— Selecciona —</option></select>
       </div>
     </div>
 
@@ -380,18 +395,18 @@
     <div class="form-grid">
       <div class="form-group">
         <label>⚽ Selección que más goles mete</label>
-        <select id="selectMaxGoles"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+        <select id="selectMaxGoles"><option value="">— Selecciona —</option></select>
       </div>
       <div class="form-group">
         <label>🔢 Goles totales en la final (exacto)</label>
-        <input type="number" id="inputGolesFinal" min="0" max="20" placeholder="Ej: 3" style="width:100%;background:var(--fondo);border:1px solid var(--borde);border-radius:7px;padding:0.55rem 0.75rem;color:var(--texto);font-size:0.85rem;font-family:Inter,sans-serif;outline:none;">
+        <input type="number" id="inputGolesFinal" min="0" max="20" placeholder="Ej: 3" style="width:100%;background:var(--fondo);border:1px solid var(--borde);border-radius:7px;padding:0.55rem 0.75rem;color:var(--texto);font-size:0.85rem;font-family:Inter,sans-serif;outline:none;" />
       </div>
     </div>
 
     <div style="margin-top:1.25rem; background:var(--fondo); border:1px solid var(--borde); border-radius:8px; padding:1rem;">
       <label style="display:flex; align-items:flex-start; gap:0.75rem; cursor:pointer; font-size:0.85rem; line-height:1.5;">
-        <input type="checkbox" id="checkBizum" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--verde);">
-        <span>Confirmo que he enviado <strong>2 €</strong> por Bizum a <strong>Inés Gestal</strong> (675 154 905) con el concepto <strong>"Porra Mundial 2026"</strong></span>
+        <input type="checkbox" id="checkBizum" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--verde);" />
+        <span>Confirmo que he enviado <strong>3 €</strong> por Bizum a <strong>Inés Gestal</strong> (675 154 905) con el concepto <strong>"Porra Mundial 2026"</strong></span>
       </label>
     </div>
 
@@ -402,57 +417,9 @@
   </div>
 
   <!-- GRUPOS -->
-  <div class="seccion activa" id="sec-grupos">
+  <div class="seccion" id="sec-grupos">
     <p class="sec-title">Los 12 Grupos del Mundial 2026</p>
-    <div class="grupos-grid" id="gruposGrid">
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo A</div>
-      <div><div class="equipo-row"><img src="./index_files/mx.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="México"> México</div><div class="equipo-row"><img src="./index_files/za.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Sudáfrica"> Sudáfrica</div><div class="equipo-row"><img src="./index_files/kr.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Corea del Sur"> Corea del Sur</div><div class="equipo-row"><img src="./index_files/cz.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Chequia"> Chequia</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo B</div>
-      <div><div class="equipo-row"><img src="./index_files/ca.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Canadá"> Canadá</div><div class="equipo-row"><img src="./index_files/ba.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Bosnia y Herzegovina"> Bosnia y Herzegovina</div><div class="equipo-row"><img src="./index_files/qa.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Catar"> Catar</div><div class="equipo-row"><img src="./index_files/ch.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Suiza"> Suiza</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo C</div>
-      <div><div class="equipo-row"><img src="./index_files/br.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Brasil"> Brasil</div><div class="equipo-row"><img src="./index_files/ma.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Marruecos"> Marruecos</div><div class="equipo-row"><img src="./index_files/ht.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Haití"> Haití</div><div class="equipo-row"><img src="./index_files/gb-sct.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Escocia"> Escocia</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo D</div>
-      <div><div class="equipo-row"><img src="./index_files/us.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="USA"> USA</div><div class="equipo-row"><img src="./index_files/py.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Paraguay"> Paraguay</div><div class="equipo-row"><img src="./index_files/au.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Australia"> Australia</div><div class="equipo-row"><img src="./index_files/tr.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Turquía"> Turquía</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo E</div>
-      <div><div class="equipo-row"><img src="./index_files/de.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Alemania"> Alemania</div><div class="equipo-row"><img src="./index_files/cw.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Curazao"> Curazao</div><div class="equipo-row"><img src="./index_files/ci.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Costa de Marfil"> Costa de Marfil</div><div class="equipo-row"><img src="./index_files/ec.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Ecuador"> Ecuador</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo F</div>
-      <div><div class="equipo-row"><img src="./index_files/nl.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Países Bajos"> Países Bajos</div><div class="equipo-row"><img src="./index_files/jp.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Japón"> Japón</div><div class="equipo-row"><img src="./index_files/se.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Suecia"> Suecia</div><div class="equipo-row"><img src="./index_files/tn.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Túnez"> Túnez</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo G</div>
-      <div><div class="equipo-row"><img src="./index_files/be.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Bélgica"> Bélgica</div><div class="equipo-row"><img src="./index_files/eg.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Egipto"> Egipto</div><div class="equipo-row"><img src="./index_files/ir.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Irán"> Irán</div><div class="equipo-row"><img src="./index_files/nz.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Nueva Zelanda"> Nueva Zelanda</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo H</div>
-      <div><div class="equipo-row"><img src="./index_files/es.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="España"> España</div><div class="equipo-row"><img src="./index_files/cv.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Cabo Verde"> Cabo Verde</div><div class="equipo-row"><img src="./index_files/sa.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Arabia Saudí"> Arabia Saudí</div><div class="equipo-row"><img src="./index_files/uy.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Uruguay"> Uruguay</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo I</div>
-      <div><div class="equipo-row"><img src="./index_files/fr.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Francia"> Francia</div><div class="equipo-row"><img src="./index_files/sn.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Senegal"> Senegal</div><div class="equipo-row"><img src="./index_files/iq.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Irak"> Irak</div><div class="equipo-row"><img src="./index_files/no.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Noruega"> Noruega</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo J</div>
-      <div><div class="equipo-row"><img src="./index_files/ar.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Argentina"> Argentina</div><div class="equipo-row"><img src="./index_files/dz.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Argelia"> Argelia</div><div class="equipo-row"><img src="./index_files/at.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Austria"> Austria</div><div class="equipo-row"><img src="./index_files/jo.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Jordania"> Jordania</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo K</div>
-      <div><div class="equipo-row"><img src="./index_files/pt.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Portugal"> Portugal</div><div class="equipo-row"><img src="./index_files/cd.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="R.D. Congo"> R.D. Congo</div><div class="equipo-row"><img src="./index_files/uz.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Uzbekistán"> Uzbekistán</div><div class="equipo-row"><img src="./index_files/co.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Colombia"> Colombia</div></div>
-    </div>
-    <div class="grupo-card">
-      <div class="grupo-header">Grupo L</div>
-      <div><div class="equipo-row"><img src="./index_files/gb-eng.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Inglaterra"> Inglaterra</div><div class="equipo-row"><img src="./index_files/hr.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Croacia"> Croacia</div><div class="equipo-row"><img src="./index_files/gh.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Ghana"> Ghana</div><div class="equipo-row"><img src="./index_files/pa.png" style="width:20px;height:15px;object-fit:cover;border-radius:2px;flex-shrink:0;" alt="Panamá"> Panamá</div></div>
-    </div></div>
+    <div class="grupos-grid" id="gruposGrid"></div>
   </div>
 
   <!-- PUNTUACIÓN -->
@@ -490,7 +457,7 @@
     <div id="adminLoginArea">
       <div class="admin-login">
         <p style="font-size:0.85rem;color:var(--texto-suave);margin-bottom:1rem;">Acceso solo para la organizadora. Introduce la contraseña:</p>
-        <input type="password" id="adminPass" placeholder="Contraseña" onkeydown="if(event.key===&#39;Enter&#39;)loginAdmin()">
+        <input type="password" id="adminPass" placeholder="Contraseña" onkeydown="if(event.key==='Enter')loginAdmin()" />
         <button class="btn btn-verde" style="width:100%;" onclick="loginAdmin()">Entrar</button>
       </div>
     </div>
@@ -506,11 +473,11 @@
       <div class="form-grid">
         <div class="form-group">
           <label>⚽ Selección que más goles metió</label>
-          <select id="adminMaxGoles"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+          <select id="adminMaxGoles"><option value="">— —</option></select>
         </div>
         <div class="form-group">
           <label>🔢 Goles totales en la final (real)</label>
-          <input type="number" id="adminGolesFinal" min="0" max="20" placeholder="Ej: 3" style="width:100%;background:var(--fondo);border:1px solid var(--borde);border-radius:7px;padding:0.55rem 0.75rem;color:var(--texto);font-size:0.85rem;font-family:Inter,sans-serif;outline:none;">
+          <input type="number" id="adminGolesFinal" min="0" max="20" placeholder="Ej: 3" style="width:100%;background:var(--fondo);border:1px solid var(--borde);border-radius:7px;padding:0.55rem 0.75rem;color:var(--texto);font-size:0.85rem;font-family:Inter,sans-serif;outline:none;" />
         </div>
       </div>
 
@@ -518,23 +485,23 @@
       <div class="form-grid">
         <div class="form-group">
           <label>⚡ Campeón de 1/8 real</label>
-          <select id="adminOctavos"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+          <select id="adminOctavos"><option value="">— —</option></select>
         </div>
         <div class="form-group">
           <label>⚡ Campeón de Cuartos real</label>
-          <select id="adminCuartos"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+          <select id="adminCuartos"><option value="">— —</option></select>
         </div>
         <div class="form-group">
           <label>⚡ Campeón de Semis real</label>
-          <select id="adminSemis"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+          <select id="adminSemis"><option value="">— —</option></select>
         </div>
         <div class="form-group">
           <label>🥈 Subcampeón real</label>
-          <select id="adminSubcampeon"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+          <select id="adminSubcampeon"><option value="">— —</option></select>
         </div>
         <div class="form-group">
           <label>🏆 Campeón real</label>
-          <select id="adminCampeon"><option value="">— Selecciona —</option><option value="Alemania">Alemania</option><option value="Arabia Saudí">Arabia Saudí</option><option value="Argelia">Argelia</option><option value="Argentina">Argentina</option><option value="Australia">Australia</option><option value="Austria">Austria</option><option value="Bélgica">Bélgica</option><option value="Bosnia y Herzegovina">Bosnia y Herzegovina</option><option value="Brasil">Brasil</option><option value="Cabo Verde">Cabo Verde</option><option value="Canadá">Canadá</option><option value="Catar">Catar</option><option value="Chequia">Chequia</option><option value="Colombia">Colombia</option><option value="Corea del Sur">Corea del Sur</option><option value="Costa de Marfil">Costa de Marfil</option><option value="Croacia">Croacia</option><option value="Curazao">Curazao</option><option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="Escocia">Escocia</option><option value="España">España</option><option value="Francia">Francia</option><option value="Ghana">Ghana</option><option value="Haití">Haití</option><option value="Inglaterra">Inglaterra</option><option value="Irak">Irak</option><option value="Irán">Irán</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Marruecos">Marruecos</option><option value="México">México</option><option value="Noruega">Noruega</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Países Bajos">Países Bajos</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Portugal">Portugal</option><option value="R.D. Congo">R.D. Congo</option><option value="Senegal">Senegal</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option><option value="Túnez">Túnez</option><option value="Turquía">Turquía</option><option value="Uruguay">Uruguay</option><option value="USA">USA</option><option value="Uzbekistán">Uzbekistán</option></select>
+          <select id="adminCampeon"><option value="">— —</option></select>
         </div>
       </div>
       <div class="btn-row">
@@ -590,6 +557,30 @@ let adminLogueado = false;
 // ─────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────
+// COUNTDOWN
+const PLAZO = new Date('2026-06-19T20:00:00');
+function actualizarCountdown() {
+  const ahora = new Date();
+  const diff = PLAZO - ahora;
+  if (diff <= 0) {
+    document.getElementById('countdownTimer').innerHTML = '<span class="countdown-expirado">🔒 Inscripción cerrada</span>';
+    // Deshabilitar botón de envío si existe
+    const btn = document.getElementById('btnEnviar');
+    if (btn) { btn.disabled = true; btn.textContent = '🔒 Plazo cerrado'; }
+    return;
+  }
+  const dias = Math.floor(diff / (1000*60*60*24));
+  const horas = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const segs = Math.floor((diff % (1000*60)) / 1000);
+  document.getElementById('cd-dias').textContent = String(dias).padStart(2,'0');
+  document.getElementById('cd-horas').textContent = String(horas).padStart(2,'0');
+  document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
+  document.getElementById('cd-segs').textContent = String(segs).padStart(2,'0');
+}
+actualizarCountdown();
+setInterval(actualizarCountdown, 1000);
+
 renderGrupos();
 renderInscripcionForm();
 rellenarSelectsCampeon();
@@ -639,7 +630,7 @@ async function cargarDatosSheet() {
     }).filter(p => p.nombre);
 
     document.getElementById('numParticipantes').textContent = participantes.length;
-    document.getElementById('boteTotal').textContent = (participantes.length * 2) + ' €';
+    document.getElementById('boteTotal').textContent = (participantes.length * 3) + ' €';
     renderClasificacion();
     cargarResultadosAPI();
   } catch(e) {
@@ -701,7 +692,7 @@ function renderClasificacion() {
       if (b.pts !== a.pts) return b.pts - a.pts;
       return b.grupos_acertados - a.grupos_acertados; // desempate por grupos acertados
     });
-  const bote = participantes.length * 2;
+  const bote = participantes.length * 3;
   cont.innerHTML = `
     <table class="ranking-table">
       <thead><tr><th>#</th><th>Participante</th><th>Campeón</th><th>Grupos ✓</th><th>Puntos</th><th>Premio est.</th></tr></thead>
@@ -743,24 +734,130 @@ function renderGrupos() {
 // ─────────────────────────────────────────
 // FORMULARIO INSCRIPCIÓN
 // ─────────────────────────────────────────
+function irPaso(n) {
+  [1,2,3,4].forEach(i => {
+    document.getElementById(`wizard-paso-${i}`).style.display = i===n ? 'block' : 'none';
+    const tab = document.getElementById(`paso-tab-${i}`);
+    if (i===n) { tab.style.background='var(--verde)'; tab.style.color='white'; }
+    else if (i<n) { tab.style.background='var(--superficie2)'; tab.style.color='var(--verde)'; }
+    else { tab.style.background='var(--fondo)'; tab.style.color='var(--texto-suave)'; }
+  });
+}
+
+function wizardSiguiente(pasoActual) {
+  if (pasoActual === 1) {
+    const nombre = document.getElementById('inputNombre').value.trim();
+    if (!nombre) { mostrarToast('❌ Escribe tu nombre', true); return; }
+  }
+  if (pasoActual === 2) {
+    for (const g of GRUPOS) {
+      const p1 = getFlagSelectValue(`f_${g.nombre}_1`);
+      if (!p1) { mostrarToast(`❌ Rellena el Grupo ${g.nombre}`, true); return; }
+    }
+  }
+  if (pasoActual === 3) {
+    if (!getFlagSelectValue('selectOctavos')) { mostrarToast('❌ Elige el campeón de 1/8', true); return; }
+    if (!getFlagSelectValue('selectCuartos')) { mostrarToast('❌ Elige el campeón de cuartos', true); return; }
+    if (!getFlagSelectValue('selectSemis')) { mostrarToast('❌ Elige el campeón de semis', true); return; }
+    if (!getFlagSelectValue('selectSubcampeon')) { mostrarToast('❌ Elige el subcampeón', true); return; }
+    if (!getFlagSelectValue('selectCampeon')) { mostrarToast('❌ Elige el campeón', true); return; }
+  }
+  irPaso(pasoActual + 1);
+}
+
 function renderInscripcionForm() {
   document.getElementById('gruposForm').innerHTML = GRUPOS.map(g => {
-    const opts = g.equipos.map(e => `<option value="${e}">${e}</option>`).join('');
-    return `
-      <div class="form-group">
-        <label>Grupo ${g.nombre} — 1º</label>
-        <select id="f_${g.nombre}_1"><option value="">— —</option>${opts}</select>
-      </div>`;
+    return `<div class="form-group"><label>Grupo ${g.nombre} — 1º</label><div id="f_${g.nombre}_1"></div></div>`;
   }).join('');
+  // Crear flag selects para cada grupo
+  GRUPOS.forEach(g => {
+    crearFlagSelect(`f_${g.nombre}_1`, g.equipos, '— —');
+  });
+}
+
+function crearFlagSelect(containerId, equipos, placeholder, onChange) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  container.classList.add('flag-select');
+
+  let valor = '';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'flag-select-btn';
+  btn.innerHTML = `<span class="flag-select-label"><span class="flag-placeholder">${placeholder}</span></span><span class="arrow">▼</span>`;
+
+  const dropdown = document.createElement('div');
+  dropdown.className = 'flag-select-dropdown';
+
+  // Opción vacía
+  const optVacia = document.createElement('div');
+  optVacia.className = 'flag-select-option';
+  optVacia.innerHTML = `<span class="flag-placeholder">${placeholder}</span>`;
+  optVacia.onclick = () => { valor = ''; btn.innerHTML = `<span class="flag-select-label"><span class="flag-placeholder">${placeholder}</span></span><span class="arrow">▼</span>`; dropdown.classList.remove('open'); btn.classList.remove('open'); if(onChange) onChange(''); };
+  dropdown.appendChild(optVacia);
+
+  equipos.forEach(e => {
+    const code = FLAGS[e] || '';
+    const flagHtml = code ? `<img src="https://flagcdn.com/20x15/${code}.png" width="20" height="15" alt="">` : '';
+    const opt = document.createElement('div');
+    opt.className = 'flag-select-option';
+    opt.dataset.value = e;
+    opt.innerHTML = `${flagHtml} ${e}`;
+    opt.onclick = () => {
+      valor = e;
+      btn.innerHTML = `<span class="flag-select-label">${flagHtml} ${e}</span><span class="arrow">▼</span>`;
+      dropdown.querySelectorAll('.flag-select-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      dropdown.classList.remove('open');
+      btn.classList.remove('open');
+      if(onChange) onChange(e);
+    };
+    dropdown.appendChild(opt);
+  });
+
+  btn.onclick = (ev) => {
+    ev.stopPropagation();
+    const isOpen = dropdown.classList.contains('open');
+    document.querySelectorAll('.flag-select-dropdown').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.flag-select-btn').forEach(b => b.classList.remove('open'));
+    if (!isOpen) { dropdown.classList.add('open'); btn.classList.add('open'); }
+  };
+
+  container.appendChild(btn);
+  container.appendChild(dropdown);
+  container._getValue = () => valor;
+  container._setValue = (v) => {
+    valor = v;
+    if (!v) { btn.innerHTML = `<span class="flag-select-label"><span class="flag-placeholder">${placeholder}</span></span><span class="arrow">▼</span>`; return; }
+    const code = FLAGS[v] || '';
+    const flagHtml = code ? `<img src="https://flagcdn.com/20x15/${code}.png" width="20" height="15" alt="">` : '';
+    btn.innerHTML = `<span class="flag-select-label">${flagHtml} ${v}</span><span class="arrow">▼</span>`;
+    dropdown.querySelectorAll('.flag-select-option').forEach(o => { if(o.dataset.value===v) o.classList.add('selected'); else o.classList.remove('selected'); });
+  };
+}
+
+// Cerrar dropdowns al hacer click fuera
+document.addEventListener('click', () => {
+  document.querySelectorAll('.flag-select-dropdown').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.flag-select-btn').forEach(b => b.classList.remove('open'));
+});
+
+function getFlagSelectValue(id) {
+  const el = document.getElementById(id);
+  return el?._getValue ? el._getValue() : '';
+}
+function setFlagSelectValue(id, v) {
+  const el = document.getElementById(id);
+  if (el?._setValue) el._setValue(v);
 }
 
 function rellenarSelectsCampeon() {
-  const opts = TODOS.map(e => `<option value="${e}">${e}</option>`).join('');
-  ['selectCampeon','selectSubcampeon','selectOctavos','selectCuartos','selectSemis',
-   'adminCampeon','adminSubcampeon','adminOctavos','adminCuartos','adminSemis',
-   'selectMaxGoles','adminMaxGoles'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = '<option value="">— Selecciona —</option>' + opts;
+  const IDS_INSCRIPCION = ['selectOctavos','selectCuartos','selectSemis','selectSubcampeon','selectCampeon','selectMaxGoles'];
+  const IDS_ADMIN = ['adminOctavos','adminCuartos','adminSemis','adminSubcampeon','adminCampeon','adminMaxGoles'];
+  [...IDS_INSCRIPCION, ...IDS_ADMIN].forEach(id => {
+    crearFlagSelect(id, TODOS, '— Selecciona —');
   });
 }
 
@@ -777,23 +874,15 @@ async function enviarInscripcion() {
 
   const grupos = {};
   for (const g of GRUPOS) {
-    const p1 = document.getElementById(`f_${g.nombre}_1`)?.value;
-    if (!p1) { mostrarToast(`❌ Rellena el Grupo ${g.nombre}`, true); return; }
-    grupos[g.nombre] = { primero: p1 };
+    grupos[g.nombre] = { primero: getFlagSelectValue(`f_${g.nombre}_1`) };
   }
 
-  const octavos = document.getElementById('selectOctavos').value;
-  const cuartos = document.getElementById('selectCuartos').value;
-  const semis = document.getElementById('selectSemis').value;
-  const campeon = document.getElementById('selectCampeon').value;
-  const subcampeon = document.getElementById('selectSubcampeon').value;
-  if (!octavos) { mostrarToast('❌ Elige el equipo campeón de 1/8', true); return; }
-  if (!cuartos) { mostrarToast('❌ Elige el equipo campeón de cuartos', true); return; }
-  if (!semis) { mostrarToast('❌ Elige el equipo campeón de semis', true); return; }
-  if (!campeon) { mostrarToast('❌ Elige el campeón del Mundial', true); return; }
-  if (!subcampeon) { mostrarToast('❌ Elige el subcampeón', true); return; }
-
-  const maxGoles = document.getElementById('selectMaxGoles').value;
+  const octavos = getFlagSelectValue('selectOctavos');
+  const cuartos = getFlagSelectValue('selectCuartos');
+  const semis = getFlagSelectValue('selectSemis');
+  const campeon = getFlagSelectValue('selectCampeon');
+  const subcampeon = getFlagSelectValue('selectSubcampeon');
+  const maxGoles = getFlagSelectValue('selectMaxGoles');
   const golesFinal = document.getElementById('inputGolesFinal').value;
   if (!maxGoles) { mostrarToast('❌ Elige la selección que más goles mete', true); return; }
   if (golesFinal === '') { mostrarToast('❌ Indica los goles totales en la final', true); return; }
@@ -888,41 +977,38 @@ function loginAdmin() {
 
 function renderAdminGrupos() {
   document.getElementById('adminGruposForm').innerHTML = GRUPOS.map(g => {
-    const opts = g.equipos.map(e => `<option value="${e}">${e}</option>`).join('');
-    return `
-      <div class="form-group">
-        <label>Grupo ${g.nombre} — 1º real</label>
-        <select id="r_${g.nombre}_1"><option value="">— —</option>${opts}</select>
-      </div>`;
+    return `<div class="form-group"><label>Grupo ${g.nombre} — 1º real</label><div id="r_${g.nombre}_1"></div></div>`;
   }).join('');
+  GRUPOS.forEach(g => {
+    crearFlagSelect(`r_${g.nombre}_1`, g.equipos, '— —');
+  });
 }
 
 function cargarResultadosAdmin() {
   GRUPOS.forEach(g => {
-    const s1 = document.getElementById(`r_${g.nombre}_1`);
-    if (s1 && resultados[g.nombre]?.primero) s1.value = resultados[g.nombre].primero;
+    if (resultados[g.nombre]?.primero) setFlagSelectValue(`r_${g.nombre}_1`, resultados[g.nombre].primero);
   });
-  if (resultados.octavos) document.getElementById('adminOctavos').value = resultados.octavos;
-  if (resultados.cuartos) document.getElementById('adminCuartos').value = resultados.cuartos;
-  if (resultados.semis) document.getElementById('adminSemis').value = resultados.semis;
-  if (resultados.campeon) document.getElementById('adminCampeon').value = resultados.campeon;
-  if (resultados.subcampeon) document.getElementById('adminSubcampeon').value = resultados.subcampeon;
-  if (resultados.maxGoles) document.getElementById('adminMaxGoles').value = resultados.maxGoles;
+  if (resultados.octavos) setFlagSelectValue('adminOctavos', resultados.octavos);
+  if (resultados.cuartos) setFlagSelectValue('adminCuartos', resultados.cuartos);
+  if (resultados.semis) setFlagSelectValue('adminSemis', resultados.semis);
+  if (resultados.campeon) setFlagSelectValue('adminCampeon', resultados.campeon);
+  if (resultados.subcampeon) setFlagSelectValue('adminSubcampeon', resultados.subcampeon);
+  if (resultados.maxGoles) setFlagSelectValue('adminMaxGoles', resultados.maxGoles);
   if (resultados.golesFinal !== undefined) document.getElementById('adminGolesFinal').value = resultados.golesFinal;
 }
 
 function guardarResultados() {
   GRUPOS.forEach(g => {
     resultados[g.nombre] = {
-      primero: document.getElementById(`r_${g.nombre}_1`)?.value || '',
+      primero: getFlagSelectValue(`r_${g.nombre}_1`) || '',
     };
   });
-  resultados.octavos = document.getElementById('adminOctavos').value;
-  resultados.cuartos = document.getElementById('adminCuartos').value;
-  resultados.semis = document.getElementById('adminSemis').value;
-  resultados.campeon = document.getElementById('adminCampeon').value;
-  resultados.subcampeon = document.getElementById('adminSubcampeon').value;
-  resultados.maxGoles = document.getElementById('adminMaxGoles').value;
+  resultados.octavos = getFlagSelectValue('adminOctavos');
+  resultados.cuartos = getFlagSelectValue('adminCuartos');
+  resultados.semis = getFlagSelectValue('adminSemis');
+  resultados.campeon = getFlagSelectValue('adminCampeon');
+  resultados.subcampeon = getFlagSelectValue('adminSubcampeon');
+  resultados.maxGoles = getFlagSelectValue('adminMaxGoles');
   resultados.golesFinal = document.getElementById('adminGolesFinal').value;
   localStorage.setItem('porra_resultados', JSON.stringify(resultados));
   renderClasificacion();
@@ -939,6 +1025,5 @@ function mostrarToast(msg, error=false) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 </script>
-
-
-</body></html>
+</body>
+</html>
