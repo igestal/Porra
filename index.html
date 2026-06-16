@@ -244,7 +244,6 @@ footer{text-align:center;padding:1.75rem 1.5rem 1.25rem;color:var(--txt2);font-s
 <div class="tabs">
   <div class="tab active" onclick="showSec('clas',this)">🏆 Clasificación</div>
   <div class="tab" onclick="showSec('ins',this)">✍️ Apuntarse</div>
-  <div class="tab" onclick="showSec('gru',this)">🌍 Grupos</div>
   <div class="tab" onclick="showSec('punt',this)">📋 Puntuación</div>
   <div class="tab" onclick="showSec('adm',this)">🔐 Admin</div>
 </div>
@@ -262,7 +261,7 @@ footer{text-align:center;padding:1.75rem 1.5rem 1.25rem;color:var(--txt2);font-s
     <p class="sec-title">Apúntate a la porra</p>
     <div class="wizard-steps">
       <div class="wstep active" id="ws1" onclick="goStep(1)">1 · Nombre</div>
-      <div class="wstep" id="ws2" onclick="goStep(2)">2 · Eliminatoria</div>
+      <div class="wstep" id="ws2" onclick="goStep(2)">2 · Final</div>
       <div class="wstep" id="ws3" onclick="goStep(3)">3 · Especiales</div>
     </div>
 
@@ -276,13 +275,16 @@ footer{text-align:center;padding:1.75rem 1.5rem 1.25rem;color:var(--txt2);font-s
       <div class="btn-row"><button class="btn btn-v" onclick="nextStep(1)">Siguiente →</button></div>
     </div>
 
-    <!-- paso 2: eliminatoria -->
+    <!-- paso 2: final -->
     <div class="wpaso" id="wp2">
-      <p style="font-size:.83rem;color:var(--txt2);margin-bottom:1rem;">Elige un equipo para cada fase. Pueden ser distintos.</p>
-      <div class="ecard"><div class="elbl">⚡ Campeón de Dieciseisavos <span>3 pts</span></div><div id="sel-diecis"></div></div>
-      <div class="ecard"><div class="elbl">⚡ Campeón de 1/8 final <span>5 pts</span></div><div id="sel-octavos"></div></div>
-      <div class="ecard"><div class="elbl">⚡ Campeón de Cuartos <span>8 pts</span></div><div id="sel-cuartos"></div></div>
-      <div class="ecard"><div class="elbl">⚡ Campeón de Semifinales <span>10 pts</span></div><div id="sel-semis"></div></div>
+      <p style="font-size:.83rem;color:var(--txt2);margin-bottom:1rem;">Elige las 4 selecciones que crees que llegan a <strong>semifinales</strong>, el subcampeón y el campeón.</p>
+      <div style="background:rgba(1,75,82,0.06);border:1px solid var(--borde);border-radius:10px;padding:.75rem 1rem;margin-bottom:.85rem;font-size:.78rem;color:var(--txt2);">
+        Cada semifinalista que aciertes suma <strong style="color:var(--verde)">8 pts</strong>. Puedes sumar hasta 32 pts.
+      </div>
+      <div class="ecard"><div class="elbl">🏟️ Semifinalista 1 <span>8 pts</span></div><div id="sel-semi1"></div></div>
+      <div class="ecard"><div class="elbl">🏟️ Semifinalista 2 <span>8 pts</span></div><div id="sel-semi2"></div></div>
+      <div class="ecard"><div class="elbl">🏟️ Semifinalista 3 <span>8 pts</span></div><div id="sel-semi3"></div></div>
+      <div class="ecard"><div class="elbl">🏟️ Semifinalista 4 <span>8 pts</span></div><div id="sel-semi4"></div></div>
       <div class="ecard"><div class="elbl">🥈 Subcampeón <span>10 pts</span></div><div id="sel-sub"></div></div>
       <div class="ecard highlight"><div class="elbl">🏆 Campeón del Mundial <span>20 pts</span></div><div id="sel-camp"></div></div>
       <div class="btn-row">
@@ -293,7 +295,18 @@ footer{text-align:center;padding:1.75rem 1.5rem 1.25rem;color:var(--txt2);font-s
 
     <!-- paso 3: especiales -->
     <div class="wpaso" id="wp3">
-      <div class="ecard"><div class="elbl">⚽ Selección que más goles mete <span>10 pts</span></div><div id="sel-goleadora"></div></div>
+      <div class="ecard">
+        <div class="elbl">⚽ Máximo goleador del Mundial <span>25 pts</span></div>
+        <input class="finput" type="text" id="inputGoleador" placeholder="Ej: Kylian Mbappé"/>
+      </div>
+      <div class="ecard">
+        <div class="elbl">🧤 Portero menos goleado <span>20 pts</span></div>
+        <input class="finput" type="text" id="inputPortero" placeholder="Ej: Thibaut Courtois"/>
+      </div>
+      <div class="ecard">
+        <div class="elbl">🌟 Mejor jugador del Mundial <span>25 pts</span></div>
+        <input class="finput" type="text" id="inputMVP" placeholder="Ej: Vinicius Jr"/>
+      </div>
       <div class="ecard">
         <div class="elbl">🔢 Goles totales en la final — exacto <span>25 pts</span></div>
         <input class="finput" type="number" id="inputGoles" min="0" max="30" placeholder="Ej: 3"/>
@@ -312,24 +325,19 @@ footer{text-align:center;padding:1.75rem 1.5rem 1.25rem;color:var(--txt2);font-s
     </div>
   </div>
 
-  <!-- GRUPOS -->
-  <div class="sec" id="sec-gru">
-    <p class="sec-title">Los 12 Grupos del Mundial 2026</p>
-    <div class="ggrid" id="gruposGrid"></div>
-  </div>
+
 
   <!-- PUNTUACIÓN -->
   <div class="sec" id="sec-punt">
     <p class="sec-title">Sistema de Puntuación</p>
 
-    <div class="pcard"><h3>⚡ Fase Eliminatoria</h3>
-      <div class="pitem"><span>Campeón de Dieciseisavos</span><span class="pval">3 pts</span></div>
-      <div class="pitem"><span>Campeón de 1/8 final</span><span class="pval">5 pts</span></div>
-      <div class="pitem"><span>Campeón de Cuartos</span><span class="pval">8 pts</span></div>
-      <div class="pitem"><span>Campeón de Semifinales</span><span class="pval">10 pts</span></div>
+    <div class="pcard"><h3>⚡ Apuestas</h3>
+      <div class="pitem"><span>🏟️ Cada semifinalista acertado (x4)</span><span class="pval">8 pts</span></div>
       <div class="pitem"><span>🥈 Subcampeón</span><span class="pval">10 pts</span></div>
       <div class="pitem"><span>🏆 Campeón del Mundial</span><span class="pval">20 pts</span></div>
-      <div class="pitem"><span>⚽ Selección más goleadora</span><span class="pval">10 pts</span></div>
+      <div class="pitem"><span>⚽ Máximo goleador del Mundial</span><span class="pval">25 pts</span></div>
+      <div class="pitem"><span>🧤 Portero menos goleado</span><span class="pval">20 pts</span></div>
+      <div class="pitem"><span>🌟 Mejor jugador del Mundial</span><span class="pval">25 pts</span></div>
       <div class="pitem"><span>🔢 Goles exactos en la final</span><span class="pval">25 pts</span></div>
     </div>
     <div class="pcard"><h3>⚖️ Desempate</h3>
@@ -356,13 +364,24 @@ footer{text-align:center;padding:1.75rem 1.5rem 1.25rem;color:var(--txt2);font-s
       <p style="font-size:.83rem;color:var(--txt2);margin-bottom:1.25rem;">Introduce los resultados reales. Los puntos se recalculan automáticamente.</p>
 
       <div class="form-section-title" style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--verde);margin:.85rem 0 .75rem;border-bottom:1px solid var(--borde);padding-bottom:.35rem;">Fase eliminatoria real</div>
-      <div class="ecard"><div class="elbl">⚡ Campeón de Dieciseisavos</div><div id="adm-diecis"></div></div>
-      <div class="ecard"><div class="elbl">⚡ Campeón de 1/8 final</div><div id="adm-octavos"></div></div>
-      <div class="ecard"><div class="elbl">⚡ Campeón de Cuartos</div><div id="adm-cuartos"></div></div>
-      <div class="ecard"><div class="elbl">⚡ Campeón de Semifinales</div><div id="adm-semis"></div></div>
-      <div class="ecard"><div class="elbl">🥈 Subcampeón</div><div id="adm-sub"></div></div>
-      <div class="ecard highlight"><div class="elbl">🏆 Campeón del Mundial</div><div id="adm-camp"></div></div>
-      <div class="ecard"><div class="elbl">⚽ Selección más goleadora</div><div id="adm-goleadora"></div></div>
+      <div class="ecard"><div class="elbl">🏟️ Semifinalista 1 real</div><div id="adm-semi1"></div></div>
+      <div class="ecard"><div class="elbl">🏟️ Semifinalista 2 real</div><div id="adm-semi2"></div></div>
+      <div class="ecard"><div class="elbl">🏟️ Semifinalista 3 real</div><div id="adm-semi3"></div></div>
+      <div class="ecard"><div class="elbl">🏟️ Semifinalista 4 real</div><div id="adm-semi4"></div></div>
+      <div class="ecard"><div class="elbl">🥈 Subcampeón real</div><div id="adm-sub"></div></div>
+      <div class="ecard highlight"><div class="elbl">🏆 Campeón real</div><div id="adm-camp"></div></div>
+      <div class="ecard">
+        <div class="elbl">⚽ Máximo goleador real</div>
+        <input class="finput" type="text" id="admGoleador" placeholder="Ej: Mbappé"/>
+      </div>
+      <div class="ecard">
+        <div class="elbl">🧤 Portero menos goleado real</div>
+        <input class="finput" type="text" id="admPortero" placeholder="Ej: Courtois"/>
+      </div>
+      <div class="ecard">
+        <div class="elbl">🌟 Mejor jugador real</div>
+        <input class="finput" type="text" id="admMVP" placeholder="Ej: Vinicius Jr"/>
+      </div>
       <div class="ecard">
         <div class="elbl">🔢 Goles totales en la final</div>
         <input class="finput" type="number" id="admGoles" min="0" max="30" placeholder="Ej: 3"/>
@@ -538,14 +557,7 @@ window.addEventListener('scroll',(e)=>{
 function gv(id){const el=document.getElementById(id);return el?._get?el._get():'';}
 function sv(id,v){const el=document.getElementById(id);if(el?._set)el._set(v);}
 
-// ── RENDER GRUPOS ──
-function renderGrupos(){
-  document.getElementById('gruposGrid').innerHTML=GRUPOS.map(g=>`
-    <div class="gcard">
-      <div class="ghead">Grupo ${g.n}</div>
-      <div>${g.e.map(e=>`<div class="grow">${flagImg(e)} ${e}</div>`).join('')}</div>
-    </div>`).join('');
-}
+
 
 // ── RENDER FORM GRUPOS ──
 function renderFormGrupos(){
@@ -562,29 +574,23 @@ function renderFormGrupos(){
 
 // ── RENDER SELECTS ELIM ──
 function renderSelElim(){
-  const selElim=[
-    {id:'sel-diecis',eq:TODOS},
-    {id:'sel-octavos',eq:TODOS},
-    {id:'sel-cuartos',eq:TODOS},
-    {id:'sel-semis',eq:TODOS},
-    {id:'sel-sub',eq:TODOS},
-    {id:'sel-camp',eq:TODOS},
-    {id:'sel-goleadora',eq:TODOS},
-  ];
-  selElim.forEach(({id,eq})=>crearFlagSelect(id,eq,'— elige —'));
+  ['sel-semi1','sel-semi2','sel-semi3','sel-semi4','sel-sub','sel-camp']
+    .forEach(id=>crearFlagSelect(id,TODOS,'— elige —'));
 }
 
 function renderAdminSelects(){
-  ['adm-diecis','adm-octavos','adm-cuartos','adm-semis','adm-sub','adm-camp','adm-goleadora']
+  ['adm-semi1','adm-semi2','adm-semi3','adm-semi4','adm-sub','adm-camp']
     .forEach(id=>crearFlagSelect(id,TODOS,'— —'));
 
-  if(resultados.diecis)sv('adm-diecis',resultados.diecis);
-  if(resultados.octavos)sv('adm-octavos',resultados.octavos);
-  if(resultados.cuartos)sv('adm-cuartos',resultados.cuartos);
-  if(resultados.semis)sv('adm-semis',resultados.semis);
+  if(resultados.semi1)sv('adm-semi1',resultados.semi1);
+  if(resultados.semi2)sv('adm-semi2',resultados.semi2);
+  if(resultados.semi3)sv('adm-semi3',resultados.semi3);
+  if(resultados.semi4)sv('adm-semi4',resultados.semi4);
   if(resultados.sub)sv('adm-sub',resultados.sub);
   if(resultados.camp)sv('adm-camp',resultados.camp);
-  if(resultados.goleadora)sv('adm-goleadora',resultados.goleadora);
+  if(resultados.goleador)document.getElementById('admGoleador').value=resultados.goleador;
+  if(resultados.portero)document.getElementById('admPortero').value=resultados.portero;
+  if(resultados.mvp)document.getElementById('admMVP').value=resultados.mvp;
   if(resultados.goles!==undefined)document.getElementById('admGoles').value=resultados.goles;
 }
 
@@ -604,10 +610,7 @@ function nextStep(n){
     if(!document.getElementById('inputNombre').value.trim()){toast('❌ Escribe tu nombre',true);return;}
   }
   if(n===2){
-    if(!gv('sel-diecis')){toast('❌ Elige el campeón de Dieciseisavos',true);return;}
-    if(!gv('sel-octavos')){toast('❌ Elige el campeón de 1/8',true);return;}
-    if(!gv('sel-cuartos')){toast('❌ Elige el campeón de Cuartos',true);return;}
-    if(!gv('sel-semis')){toast('❌ Elige el campeón de Semis',true);return;}
+    if(!gv('sel-semi1')||!gv('sel-semi2')||!gv('sel-semi3')||!gv('sel-semi4')){toast('❌ Elige los 4 semifinalistas',true);return;}
     if(!gv('sel-sub')){toast('❌ Elige el Subcampeón',true);return;}
     if(!gv('sel-camp')){toast('❌ Elige el Campeón',true);return;}
   }
@@ -618,12 +621,17 @@ function nextStep(n){
 async function enviar(){
   const nombre=document.getElementById('inputNombre').value.trim();
   if(!nombre){toast('❌ Escribe tu nombre',true);return;}
-  const diecis=gv('sel-diecis'),octavos=gv('sel-octavos'),cuartos=gv('sel-cuartos');
-  const semis=gv('sel-semis'),sub=gv('sel-sub'),camp=gv('sel-camp');
-  const goleadora=gv('sel-goleadora');
+  const semi1=gv('sel-semi1'),semi2=gv('sel-semi2'),semi3=gv('sel-semi3'),semi4=gv('sel-semi4');
+  const sub=gv('sel-sub'),camp=gv('sel-camp');
+  const goleador=document.getElementById('inputGoleador').value.trim();
+  const portero=document.getElementById('inputPortero').value.trim();
+  const mvp=document.getElementById('inputMVP').value.trim();
   const goles=document.getElementById('inputGoles').value;
-  if(!diecis||!octavos||!cuartos||!semis||!sub||!camp){toast('❌ Completa la fase eliminatoria',true);goStep(2);return;}
-  if(!goleadora){toast('❌ Elige la selección más goleadora',true);return;}
+  if(!semi1||!semi2||!semi3||!semi4){toast('❌ Elige los 4 semifinalistas',true);goStep(2);return;}
+  if(!sub||!camp){toast('❌ Elige subcampeón y campeón',true);goStep(2);return;}
+  if(!goleador){toast('❌ Escribe el máximo goleador',true);return;}
+  if(!portero){toast('❌ Escribe el portero menos goleado',true);return;}
+  if(!mvp){toast('❌ Escribe el mejor jugador',true);return;}
   if(goles===''){toast('❌ Indica los goles de la final',true);return;}
   if(!document.getElementById('checkBizum').checked){toast('❌ Confirma que has hecho el Bizum',true);return;}
 
@@ -631,7 +639,7 @@ async function enviar(){
   btn.disabled=true;
   document.getElementById('envioStatus').textContent='Enviando…';
 
-  const fila=[nombre,diecis,octavos,cuartos,semis,camp,sub,goleadora,goles];
+  const fila=[nombre,semi1,semi2,semi3,semi4,camp,sub,goleador,portero,mvp,goles];
   try{
     await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({accion:'inscribir',datos:fila})});
     toast('✅ ¡Apuntado! Ya estás en la porra');
@@ -654,9 +662,9 @@ async function cargarSheet(){
       const c=row.c;
       return{
         nombre:c[0]?.v||'',
-        diecis:c[1]?.v||'',octavos:c[2]?.v||'',cuartos:c[3]?.v||'',
-        semis:c[4]?.v||'',camp:c[5]?.v||'',sub:c[6]?.v||'',
-        goleadora:c[7]?.v||'',goles:c[8]?.v||'',
+        semi1:c[1]?.v||'',semi2:c[2]?.v||'',semi3:c[3]?.v||'',semi4:c[4]?.v||'',
+        camp:c[5]?.v||'',sub:c[6]?.v||'',
+        goleador:c[7]?.v||'',portero:c[8]?.v||'',mvp:c[9]?.v||'',goles:c[10]?.v||'',
       };
     }).filter(p=>p.nombre);
     document.getElementById('nPart').textContent=participantes.length;
@@ -673,17 +681,19 @@ async function cargarSheet(){
 // ── CALCULAR PUNTOS ──
 function pts(p){
   let t=0;
-  if(resultados.diecis&&p.diecis===resultados.diecis)t+=3;
-  if(resultados.octavos&&p.octavos===resultados.octavos)t+=5;
-  if(resultados.cuartos&&p.cuartos===resultados.cuartos)t+=8;
-  if(resultados.semis&&p.semis===resultados.semis)t+=10;
+  // Semifinalistas: 8 pts por cada acierto (los 4 reales forman un conjunto)
+  const semisReales=new Set([resultados.semi1,resultados.semi2,resultados.semi3,resultados.semi4].filter(Boolean));
+  [p.semi1,p.semi2,p.semi3,p.semi4].forEach(s=>{if(s&&semisReales.has(s))t+=8;});
   if(resultados.sub&&p.sub===resultados.sub)t+=10;
   if(resultados.camp&&p.camp===resultados.camp)t+=20;
-  if(resultados.goleadora&&p.goleadora===resultados.goleadora)t+=10;
+  const norm=s=>(s||'').toLowerCase().trim();
+  if(resultados.goleador&&norm(p.goleador)===norm(resultados.goleador))t+=25;
+  if(resultados.portero&&norm(p.portero)===norm(resultados.portero))t+=20;
+  if(resultados.mvp&&norm(p.mvp)===norm(resultados.mvp))t+=25;
   if(resultados.goles!==undefined&&p.goles!==undefined&&parseInt(p.goles)===parseInt(resultados.goles))t+=25;
   return t;
 }
-function gruposAcertados(p){return 0;}
+
 
 // ── RENDER RANKING ──
 function renderRanking(){
@@ -692,16 +702,31 @@ function renderRanking(){
     box.innerHTML='<div class="empty"><div class="empty-i">🏅</div><p>Aún no hay participantes.<br>¡Apúntate en "Apuntarse"!</p></div>';
     return;
   }
-  const rk=participantes.map(p=>({...p,p:pts(p),ga:gruposAcertados(p)}))
-    .sort((a,b)=>b.p!==a.p?b.p-a.p:b.ga-a.ga);
+  const rk=participantes.map(p=>({...p,p:pts(p)}))
+    .sort((a,b)=>{
+      if(b.p!==a.p)return b.p-a.p;
+      // Desempate: más semifinalistas acertados
+      const semisR=new Set([resultados.semi1,resultados.semi2,resultados.semi3,resultados.semi4].filter(Boolean));
+      const saA=[a.semi1,a.semi2,a.semi3,a.semi4].filter(s=>s&&semisR.has(s)).length;
+      const saB=[b.semi1,b.semi2,b.semi3,b.semi4].filter(s=>s&&semisR.has(s)).length;
+      if(saB!==saA)return saB-saA;
+      return 0; // empate final → cara o cruz
+    });
   const bote=participantes.length*3;
-  box.innerHTML=`<table class="rtable">
+  // Detectar empates
+    const empates=new Set();
+    rk.forEach((p,i)=>{
+      if(i>0&&p.p===rk[i-1].p){empates.add(i);empates.add(i-1);}
+    });
+    box.innerHTML=`<table class="rtable">
     <thead><tr><th>#</th><th>Nombre</th><th>Campeón</th><th>Pts</th><th>Premio</th></tr></thead>
     <tbody>${rk.map((p,i)=>{
       const pr=i===0?(bote*.6).toFixed(2)+'€':i===1?(bote*.3).toFixed(2)+'€':i===2?(bote*.1).toFixed(2)+'€':'—';
       const pc=i===0?'p1':i===1?'p2':i===2?'p3':'';
-      return`<tr><td class="pos ${pc}">${i+1}</td><td style="font-weight:600">${p.nombre}</td><td style="font-size:.75rem">${p.camp||'—'}</td><td><span class="pbadge">${p.p}</span></td><td style="font-size:.75rem;color:var(--verde);font-weight:600">${pr}</td></tr>`;
-    }).join('')}</tbody></table>`;
+      const empate=empates.has(i)?'<span style="font-size:.65rem;color:#f0a500;margin-left:.3rem;">🪙</span>':'';
+      return`<tr><td class="pos ${pc}">${i+1}</td><td style="font-weight:600">${p.nombre}${empate}</td><td style="font-size:.75rem">${p.camp||'—'}</td><td><span class="pbadge">${p.p}</span></td><td style="font-size:.75rem;color:var(--verde);font-weight:600">${pr}</td></tr>`;
+    }).join('')}</tbody></table>
+    ${empates.size>0?'<p style="font-size:.72rem;color:var(--txt2);margin-top:.75rem;">🪙 Indica empate pendiente de resolver por cara o cruz</p>':''}`;
 }
 
 // ── RESULTADOS API ──
@@ -713,7 +738,6 @@ async function cargarResultadosAPI(){
     if(data.grupos)Object.entries(data.grupos).forEach(([l,v])=>{resultados[l]=find(v.primero);});
     if(data.campeon)resultados.camp=find(data.campeon);
     if(data.subcampeon)resultados.sub=find(data.subcampeon);
-    if(data.maxGoles)resultados.goleadora=find(data.maxGoles);
     if(data.golesFinal!==undefined)resultados.goles=data.golesFinal;
     localStorage.setItem('porra_res',JSON.stringify(resultados));
     renderRanking();
@@ -731,13 +755,15 @@ function loginAdm(){
 }
 
 function guardarResultados(){
-  resultados.diecis=gv('adm-diecis');
-  resultados.octavos=gv('adm-octavos');
-  resultados.cuartos=gv('adm-cuartos');
-  resultados.semis=gv('adm-semis');
+  resultados.semi1=gv('adm-semi1');
+  resultados.semi2=gv('adm-semi2');
+  resultados.semi3=gv('adm-semi3');
+  resultados.semi4=gv('adm-semi4');
   resultados.sub=gv('adm-sub');
   resultados.camp=gv('adm-camp');
-  resultados.goleadora=gv('adm-goleadora');
+  resultados.goleador=document.getElementById('admGoleador').value.trim();
+  resultados.portero=document.getElementById('admPortero').value.trim();
+  resultados.mvp=document.getElementById('admMVP').value.trim();
   resultados.goles=document.getElementById('admGoles').value;
   localStorage.setItem('porra_res',JSON.stringify(resultados));
   renderRanking();
@@ -752,7 +778,6 @@ function toast(msg,err=false){
 }
 
 // ── INIT ──
-renderGrupos();
 renderSelElim();
 cargarSheet();
 </script>
