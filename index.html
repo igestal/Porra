@@ -211,15 +211,15 @@ footer{text-align:center;padding:1.75rem 1.5rem 1.25rem;color:var(--txt2);font-s
 </header>
 
 <div class="bizum-wrap">
-  <a href="https://bizum.es/send/?amount=3&phone=675154905&concept=Porra+Mundial+2026" target="_blank" class="bizum-btn">
+  <div class="bizum-btn" style="cursor:default;">
     <div class="bizum-logo">BIZUM</div>
     <div class="bizum-info">
       <div class="bizum-label">Pagar inscripción · 3 €</div>
       <div class="bizum-nombre">Bizum a Inés Gestal</div>
       <div class="bizum-tel">675 154 905 · Concepto: Porra Mundial 2026</div>
     </div>
-    <div class="bizum-arrow">Pagar →</div>
-  </a>
+    
+  </div>
 </div>
 
 <div class="cd-wrap">
@@ -720,12 +720,12 @@ function renderRanking(){
       if(i>0&&p.p===rk[i-1].p){empates.add(i);empates.add(i-1);}
     });
     box.innerHTML=`<table class="rtable">
-    <thead><tr><th>#</th><th>Nombre</th><th>Campeón</th><th>Pts</th><th>Premio</th></tr></thead>
+    <thead><tr><th>#</th><th>Nombre</th><th>Campeón</th><th>Pts</th></tr></thead>
     <tbody>${rk.map((p,i)=>{
-      const pr=i===0?(bote*.6).toFixed(2)+'€':i===1?(bote*.3).toFixed(2)+'€':i===2?(bote*.1).toFixed(2)+'€':'—';
+      
       const pc=i===0?'p1':i===1?'p2':i===2?'p3':'';
       const empate=empates.has(i)?'<span style="font-size:.65rem;color:#f0a500;margin-left:.3rem;">🪙</span>':'';
-      return`<tr><td class="pos ${pc}">${i+1}</td><td style="font-weight:600">${p.nombre}${empate}</td><td style="font-size:.75rem">${p.camp||'—'}</td><td><span class="pbadge">${p.p}</span></td><td style="font-size:.75rem;color:var(--verde);font-weight:600">${pr}</td></tr>`;
+      return`<tr><td class="pos ${pc}">${i+1}</td><td style="font-weight:600">${p.nombre}${empate}</td><td style="font-size:.75rem">${p.camp||'—'}</td><td><span class="pbadge">${p.p}</span></td></tr>`;
     }).join('')}</tbody></table>
     ${empates.size>0?'<p style="font-size:.72rem;color:var(--txt2);margin-top:.75rem;">🪙 Indica empate pendiente de resolver por cara o cruz</p>':''}`;
 }
